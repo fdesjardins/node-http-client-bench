@@ -1,0 +1,35 @@
+{
+  "name": "node-http-client-bench",
+  "version": "1.0.0",
+  "description": "Benchmarks for all the popular Node.js HTTP client libraries",
+  "main": "index.js",
+  "repository": "fdesjardins/node-http-client-bench",
+  "author": {
+    "name": "Forrest Desjardins",
+    "email": "desjardinsfg@gmail.com",
+    "url": "github.com/fdesjardins"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.16.1",
+    "benchmark": "^2.1.4",
+    "got": "^6.7.1",
+    "node-fetch": "^1.6.3",
+    "req-fast": "^0.2.17",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.0",
+    "request-promise-native": "^1.0.3",
+    "superagent": "^3.5.2"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}

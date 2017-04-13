@@ -1,0 +1,11 @@
+version: '2'
+services:
+  remote:
+    image: nginx
+    volumes:
+      - ./remote_server:/usr/share/nginx/html:ro
+    ports:
+      - "8888:80"
+    environment:
+     - NGINX_PORT=80
+    container_name: node-http-client-test-server
