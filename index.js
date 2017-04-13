@@ -4,6 +4,7 @@ const http = require('http')
 const axios = require('axios')
 const got = require('got')
 const nodeFetch = require('node-fetch')
+const isomorphicFetch = require('isomorphic-fetch')
 const request = require('request')
 const reqFast = require('req-fast')
 const requestPromise = require('request-promise')
@@ -12,7 +13,7 @@ const superagent = require('superagent')
 
 const suite = new Benchmark.Suite()
 
-const fixtureURI = 'http://localhost:8888/fixture.json'
+const fixtureURI = 'http://localhost:8888/1024K'
 
 // Test Cases
 
@@ -37,10 +38,15 @@ suite.add('got', {
   fn: defer => got(fixtureURI).then(() => defer.resolve())
 })
 
-suite.add('nodeFetch', {
-  defer: true,
-  fn: defer => nodeFetch(fixtureURI).then(() => defer.resolve())
-})
+// suite.add('nodeFetch', {
+//   defer: true,
+//   fn: defer => nodeFetch(fixtureURI).then(() => defer.resolve())
+// })
+
+// suite.add('isomorphicFetch', {
+//   defer: true,
+//   fn: defer => isomorphicFetch(fixtureURI).then(() => defer.resolve())
+// })
 
 suite.add('request', {
   defer: true,

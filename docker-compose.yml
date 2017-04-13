@@ -3,7 +3,8 @@ services:
   remote:
     image: nginx
     volumes:
-      - ./remote_server:/usr/share/nginx/html:ro
+      - ./fixtures:/usr/share/nginx/html:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "8888:80"
     environment:
