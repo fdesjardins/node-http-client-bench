@@ -17,26 +17,26 @@ const fixtureURI = 'http://localhost:8888/1024K'
 
 // Test Cases
 
-suite.add('http.request', {
-  defer: true,
-  fn: defer => http.get(fixtureURI, res => {
-    let body = ''
-    res.on('data', data => {
-      body += data
-    })
-    res.on('end', () => defer.resolve(body))
-  })
-})
-
-suite.add('axios', {
-  defer: true,
-  fn: defer => axios.get(fixtureURI).then(() => defer.resolve())
-})
-
-suite.add('got', {
-  defer: true,
-  fn: defer => got(fixtureURI).then(() => defer.resolve())
-})
+// suite.add('http.request', {
+//   defer: true,
+//   fn: defer => http.get(fixtureURI, res => {
+//     let body = ''
+//     res.on('data', data => {
+//       body += data
+//     })
+//     res.on('end', () => defer.resolve(body))
+//   })
+// })
+//
+// suite.add('axios', {
+//   defer: true,
+//   fn: defer => axios.get(fixtureURI).then(() => defer.resolve())
+// })
+//
+// suite.add('got', {
+//   defer: true,
+//   fn: defer => got(fixtureURI).then(() => defer.resolve())
+// })
 
 // suite.add('nodeFetch', {
 //   defer: true,
