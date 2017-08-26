@@ -18,13 +18,13 @@
     "benchmark": "^2.1.4",
     "got": "^7.1.0",
     "isomorphic-fetch": "^2.2.1",
-    "make-fetch-happen": "^2.4.13",
-    "node-fetch": "^1.7.1",
+    "make-fetch-happen": "^2.5.0",
+    "node-fetch": "^1.7.2",
     "req-fast": "^0.2.17",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
     "request-promise-native": "^1.0.4",
-    "superagent": "^3.5.2",
+    "superagent": "^3.6.0",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
