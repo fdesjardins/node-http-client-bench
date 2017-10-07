@@ -21,10 +21,10 @@
     "make-fetch-happen": "^2.5.0",
     "node-fetch": "^1.7.3",
     "req-fast": "^0.2.17",
-    "request": "^2.82.0",
-    "request-promise": "^4.2.1",
-    "request-promise-native": "^1.0.4",
-    "superagent": "^3.6.0",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "request-promise-native": "^1.0.5",
+    "superagent": "^3.6.3",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
