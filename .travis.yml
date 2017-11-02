@@ -1,7 +1,7 @@
 sudo: required
 
 env:
-  DOCKER_COMPOSE_VERSION: 1.12.0
+  DOCKER_COMPOSE_VERSION: 1.15.0
 
 services:
   - docker
@@ -11,11 +11,10 @@ language: node_js
 node_js:
   - 'stable'
 
-script: 'node index.js'
+script: 'npm run readme'
 
 before_install:
   - sudo apt-get update
-  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-engine
 
   - docker-compose --version
 
