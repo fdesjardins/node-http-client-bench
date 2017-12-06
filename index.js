@@ -13,24 +13,9 @@ const requestPromise = require('request-promise')
 const requestPromiseNative = require('request-promise-native')
 const superagent = require('superagent')
 
-const suite = new Benchmark.Suite()
+// Benchmark.options.minSamples = 100
 
-const fixtureURI = filesize => `http://localhost:8888/${filesize}K`
-
-const tableHead = [
-  [ 'Module', 'ops/sec', 'RME', 'Samples' ],
-  [ '---------------', '----------', '----------', '----------' ]
-]
-
-const downloadSizes = [ 64, 256, 1024 ]
-
-const results = {}
-downloadSizes.map(s => { results[s] = [ ...tableHead ] })
-
-// Test Cases
-
-downloadSizes.map(size => {
-  const uri = fixtureURI(size)
+const addTestCases = (suite, uri) => {
   suite.add('http.request', {
     defer: true,
     fn: defer => http.get(uri, res => {
@@ -61,17 +46,17 @@ downloadSizes.map(size => {
     defer: true,
     fn: defer => isomorphicFetch(uri).then(() => defer.resolve())
   })
-})
+  suite.add('nodeFetch', {
+    defer: true,
+    fn: defer => nodeFetch(uri).then(() => defer.resolve())
+  })
+  suite.add('req-fast', {
+    defer: true,
+    fn: defer => reqFast(uri, () => defer.resolve())
+  })
+}
 
-// suite.add('nodeFetch', {
-//   defer: true,
-//   fn: defer => nodeFetch(fixtureURI(size)).then(() => defer.resolve())
-// })
 //
-// suite.add('req-fast', {
-//   defer: true,
-//   fn: defer => reqFast(fixtureURI, () => defer.resolve())
-// })
 //
 // suite.add('request-promise', {
 //   defer: true,
@@ -86,7 +71,7 @@ downloadSizes.map(size => {
 
 let benchmarkIndex = 0
 let downloadSizeIndex = 0
-suite.on('cycle', event => {
+const onCycle = (totalCases, uris, results) => event => {
   const t = event.currentTarget[benchmarkIndex]
 
   const name = t.name
@@ -97,36 +82,58 @@ suite.on('cycle', event => {
   const output = [ name, opsPerSecond, `±${rme}%`, runsSampled ]
   console.log(`${name} x ${opsPerSecond} ops/sec ±${rme}% (${runsSampled} runs sampled)`)
 
-  const downloadSize = downloadSizes[downloadSizeIndex]
-  results[downloadSize].push(output)
+  const uri = uris[downloadSizeIndex]
+  results[uri].push(output)
 
   benchmarkIndex = (benchmarkIndex + 1)
-  if (benchmarkIndex % (suite.length / downloadSizes.length) === 0) {
+  if (benchmarkIndex % (totalCases / uris.length) === 0) {
     downloadSizeIndex += 1
   }
-})
+}
 
 const createFileSizeSection = (size, results) => {
   return `
-### GET ${size}KB File
+### GET ${size}
 \`\`\`
 ${textTable(results, { align: [ 'l', 'r', 'r', 'r' ] })}
 \`\`\`
   `
 }
 
-suite.on('complete', () => {
+const onComplete = (uris, results) => () => {
   let template = fs.readFileSync(path.join(__dirname, './templates/readme.md')).toString()
 
-  const resultsString = downloadSizes.map(s => createFileSizeSection(s, results[s])).join('')
+  const resultsString = uris.map(s => createFileSizeSection(s, results[s])).join('')
 
   template = template.replace('${results}', resultsString)
 
   fs.writeFileSync(path.join(__dirname, 'readme.md'), template)
-})
+}
 
-suite.run({
-  async: true,
-  minSamples: 30,
-  maxTime: 1000000
-})
+const runBenchmarks = (uris) => {
+  const tableHead = [
+    [ 'Module', 'OPS', 'RME', 'Samples' ],
+    [ '---------------', '----------', '----------', '----------' ]
+  ]
+
+  const results = {}
+  uris.map(s => { results[s] = [ ...tableHead ] })
+
+  const suite = Benchmark.Suite(uris)
+  uris.map(uri => {
+    addTestCases(suite, uri)
+  })
+  suite.on('cycle', onCycle(suite.length, uris, results))
+  suite.on('complete', onComplete(uris, results))
+
+  suite.run({
+    async: true
+  })
+}
+
+if (!module.parent) {
+  const createFixtureUri = filesize => `http://localhost:8888/${filesize}K`
+  const downloadSizes = [ 64, 256, 1024, 2056 ]
+  const uris = downloadSizes.map(s => createFixtureUri(s))
+  runBenchmarks(uris)
+}
