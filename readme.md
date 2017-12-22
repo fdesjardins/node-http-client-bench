@@ -12,32 +12,31 @@ $ npm run readme
 
 ## Results
 
-### GET http://localhost:8888/64K
+### GET http://bench_nginx/64K.txt
 ```
 Module                  OPS         RME     Samples
 ---------------  ----------  ----------  ----------
-superagent             1131      ±3.26%          74
+http.request           1109      ±2.17%          61
+got                     881      ±3.84%          55
+superagent             1064      ±1.25%          58
 ```
   
-### GET http://localhost:8888/256K
+### GET http://bench_nginx/256K.txt
 ```
 Module                  OPS         RME     Samples
 ---------------  ----------  ----------  ----------
-superagent              969      ±2.98%          63
+http.request            592      ±1.03%          32
+got                     428      ±3.41%          27
+superagent              560      ±1.65%          30
 ```
   
-### GET http://localhost:8888/1024K
+### GET http://bench_nginx/1024K.txt
 ```
 Module                  OPS         RME     Samples
 ---------------  ----------  ----------  ----------
-superagent              360      ±1.00%          35
-```
-  
-### GET http://localhost:8888/2056K
-```
-Module                  OPS         RME     Samples
----------------  ----------  ----------  ----------
-superagent             1336      ±1.57%          79
+http.request            142      ±2.92%          10
+got                     137      ±2.87%          10
+superagent              140      ±2.90%          10
 ```
   
 

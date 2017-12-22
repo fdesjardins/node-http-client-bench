@@ -13,7 +13,8 @@
     "node": ">=6"
   },
   "scripts": {
-    "readme": "docker-compose up -d && node index.js"
+    "readme": "docker-compose up -d && node index.js",
+    "start": "docker-compose up -d && node index.js"
   },
   "license": "MIT",
   "dependencies": {
@@ -21,22 +22,13 @@
     "benchmark": "^2.1.4",
     "got": "^7.1.0",
     "isomorphic-fetch": "^2.2.1",
-    "make-fetch-happen": "^2.5.0",
     "node-fetch": "^1.7.3",
     "req-fast": "^0.2.17",
     "request": "^2.83.0",
-    "request-promise": "^4.2.2",
-    "request-promise-native": "^1.0.5",
     "superagent": "^3.8.0",
-    "text-table": "^0.2.0",
-    "whatwg-fetch": "^2.0.3"
+    "text-table": "^0.2.0"
   },
   "devDependencies": {
-    "eslint": "^4.8.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.2.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "standard": "^10.0.3"
   }
 }
