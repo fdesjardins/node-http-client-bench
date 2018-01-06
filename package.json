@@ -13,8 +13,8 @@
     "node": ">=6"
   },
   "scripts": {
-    "readme": "docker-compose up -d && node index.js",
-    "start": "docker-compose up -d && node index.js"
+    "readme": "docker-compose up",
+    "start": "docker-compose up"
   },
   "license": "MIT",
   "dependencies": {

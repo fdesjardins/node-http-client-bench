@@ -7,7 +7,9 @@ These benchmarks use Nginx in a docker container to serve static files of severa
 ## Usage
 
 ```
-$ npm run readme
+$ docker-compose build
+$ docker-compose run benchmark sh
+$ node index.js
 ```
 
 ## Results

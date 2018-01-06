@@ -11,13 +11,7 @@ const request = require('request')
 const reqFast = require('req-fast')
 const superagent = require('superagent')
 
-// Benchmark.options.minSamples = 200
-//
-// const benchmarkOptions = {
-//   minSamples: 10000
-// }
-
-const badDataError = ''
+const badDataError = new Error('ERROR: incorrect data')
 
 const fixtures = {
   64: fs.readFileSync(path.join(__dirname, 'fixtures/64K.txt')).toString(),
@@ -38,15 +32,26 @@ const addTestCases = (suite, options) => {
         if (body === fixtures[options.size]) {
           return defer.resolve(body)
         }
-        throw new Error('ERROR: incorrect data')
+        throw badDataError
       })
     })
   })
 
-  // suite.add('axios', {
-  //   defer: true,
-  //   fn: defer => axios.get(uri).then(() => defer.resolve()).catch(err => defer.resolve(err))
-  // })
+  suite.add('axios', {
+    defer: true,
+    fn: defer => {
+      return axios.get(options.uri)
+        .then(response => {
+          if (response.data === fixtures[options.size]) {
+            return defer.resolve()
+          }
+          throw badDataError
+        })
+        .catch(err => {
+          throw err
+        })
+    }
+  })
 
   suite.add('got', {
     defer: true,
@@ -55,7 +60,7 @@ const addTestCases = (suite, options) => {
         if (response.body === fixtures[options.size]) {
           return defer.resolve()
         }
-        throw new Error('ERROR: incorrect data')
+        throw badDataError
       })
       .catch(err => {
         throw err
@@ -71,24 +76,50 @@ const addTestCases = (suite, options) => {
           if (response.text === fixtures[options.size]) {
             return defer.resolve()
           }
-          throw new Error('ERROR: incorrect data')
+          throw badDataError
         })
         .catch(err => {
           throw err
         })
     }
   })
+
+  suite.add('isomorphicFetch', {
+    defer: true,
+    fn: defer => {
+      return isomorphicFetch(options.uri)
+        .then(response => response.text())
+        .then(text => {
+          if (text === fixtures[options.size]) {
+            return defer.resolve()
+          }
+          throw badDataError
+        })
+        .catch(err => {
+          throw err
+        })
+    }
+  })
+
+  suite.add('nodeFetch', {
+    defer: true,
+    fn: defer => {
+      return nodeFetch(options.uri)
+          .then(response => response.text())
+          .then(text => {
+            if (text === fixtures[options.size]) {
+              return defer.resolve()
+            }
+            throw badDataError
+          })
+          .catch(err => {
+            throw err
+          })
+    }
+  })
   // suite.add('request', {
   //   defer: true,
   //   fn: defer => request(uri, () => defer.resolve())
-  // })
-  // suite.add('isomorphicFetch', {
-  //   defer: true,
-  //   fn: defer => isomorphicFetch(uri).then(() => defer.resolve()).catch(err => defer.resolve(err))
-  // })
-  // suite.add('nodeFetch', {
-  //   defer: true,
-  //   fn: defer => nodeFetch(uri).then(() => defer.resolve()).catch(err => defer.resolve(err))
   // })
   // suite.add('req-fast', {
   //   defer: true,
@@ -130,7 +161,7 @@ ${textTable(results, { align: [ 'l', 'r', 'r', 'r' ] })}
 const onComplete = (options, results) => () => {
   let template = fs.readFileSync(path.join(__dirname, './templates/readme.md')).toString()
 
-  const resultsString = options.map(s => createFileSizeSection(s.uri, results[s.uri])).join('')
+  const resultsString = options.map(s => createFileSizeSection(`${s.size}K.txt`, results[s.uri])).join('')
 
   template = template.replace('${results}', resultsString)
 

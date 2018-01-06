@@ -16,6 +16,7 @@ services:
     volumes:
       - .:/usr/app
       - /usr/app/node_modules
+    command: node index.js
     working_dir: /usr/app/
     environment:
       NGINX: bench_nginx

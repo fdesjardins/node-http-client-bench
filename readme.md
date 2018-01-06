@@ -7,38 +7,49 @@ These benchmarks use Nginx in a docker container to serve static files of severa
 ## Usage
 
 ```
-$ npm run readme
+$ docker-compose build
+$ docker-compose run benchmark sh
+$ node index.js
 ```
 
 ## Results
 
-### GET http://bench_nginx/64K.txt
+### GET 64K.txt
 ```
 Module                  OPS         RME     Samples
 ---------------  ----------  ----------  ----------
-http.request           1109      ±2.17%          61
-got                     881      ±3.84%          55
-superagent             1064      ±1.25%          58
+http.request            980      ±2.31%          57
+axios                   700      ±4.09%          46
+got                     814      ±3.49%          53
+superagent              956      ±2.24%          54
+isomorphicFetch         853      ±1.50%          48
+nodeFetch               893      ±1.02%          48
 ```
-  
-### GET http://bench_nginx/256K.txt
-```
-Module                  OPS         RME     Samples
----------------  ----------  ----------  ----------
-http.request            592      ±1.03%          32
-got                     428      ±3.41%          27
-superagent              560      ±1.65%          30
-```
-  
-### GET http://bench_nginx/1024K.txt
+
+### GET 256K.txt
 ```
 Module                  OPS         RME     Samples
 ---------------  ----------  ----------  ----------
-http.request            142      ±2.92%          10
-got                     137      ±2.87%          10
-superagent              140      ±2.90%          10
+http.request            548      ±1.49%          29
+axios                   369      ±4.18%          25
+got                     404      ±3.55%          27
+superagent              530      ±1.18%          28
+isomorphicFetch         461      ±1.46%          26
+nodeFetch               445      ±1.60%          26
 ```
-  
+
+### GET 1024K.txt
+```
+Module                  OPS         RME     Samples
+---------------  ----------  ----------  ----------
+http.request            132      ±2.28%           9
+axios                   110      ±2.94%           8
+got                     126      ±2.43%           9
+superagent              130      ±2.30%           9
+isomorphicFetch         109      ±3.07%           8
+nodeFetch               109      ±3.07%           8
+```
+
 
 ## License
 
