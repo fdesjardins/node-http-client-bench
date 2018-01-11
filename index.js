@@ -14,6 +14,8 @@ const superagent = require('superagent')
 const badDataError = new Error('ERROR: incorrect data')
 
 const fixtures = {
+  16: fs.readFileSync(path.join(__dirname, 'fixtures/16K.txt')).toString(),
+  32: fs.readFileSync(path.join(__dirname, 'fixtures/32K.txt')).toString(),
   64: fs.readFileSync(path.join(__dirname, 'fixtures/64K.txt')).toString(),
   256: fs.readFileSync(path.join(__dirname, 'fixtures/256K.txt')).toString(),
   1024: fs.readFileSync(path.join(__dirname, 'fixtures/1024K.txt')).toString(),
@@ -189,7 +191,7 @@ const runBenchmarks = (options) => {
 
 if (!module.parent) {
   const createFixtureUri = filesize => `http://${process.env.NGINX}/${filesize}K.txt`
-  const downloadSizes = [ 64, 256, 1024 ]
+  const downloadSizes = [ 16, 32, 64, 256, 1024 ]
   const options = downloadSizes.map(s => {
     return {
       uri: createFixtureUri(s),
