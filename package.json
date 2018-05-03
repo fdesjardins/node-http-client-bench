@@ -1,6 +1,6 @@
 {
   "name": "node-http-client-bench",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Benchmarks for all the popular Node.js HTTP client libraries",
   "main": "index.js",
   "repository": "fdesjardins/node-http-client-bench",
@@ -32,11 +32,22 @@
     "standard": "^11.0.1"
   },
   "eslintConfig": {
-    "extends": ["standard"],
+    "extends": [
+      "standard"
+    ],
     "rules": {
-      "object-curly-spacing": [2, "always"],
-      "array-bracket-spacing": [2, "always"],
-      "func-style": [2, "expression"],
+      "object-curly-spacing": [
+        2,
+        "always"
+      ],
+      "array-bracket-spacing": [
+        2,
+        "always"
+      ],
+      "func-style": [
+        2,
+        "expression"
+      ],
       "prefer-arrow-callback": [
         2,
         {
