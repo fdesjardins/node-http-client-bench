@@ -18,17 +18,31 @@
   },
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.17.0",
+    "axios": "^0.18.0",
     "benchmark": "^2.1.4",
-    "got": "^7.1.0",
+    "got": "^8.3.1",
     "isomorphic-fetch": "^2.2.1",
-    "node-fetch": "^1.7.3",
+    "node-fetch": "^2.1.2",
     "req-fast": "^0.2.17",
-    "request": "^2.83.0",
-    "superagent": "^3.8.0",
+    "request": "^2.85.0",
+    "superagent": "^3.8.3",
     "text-table": "^0.2.0"
   },
   "devDependencies": {
-    "standard": "^10.0.3"
+    "standard": "^11.0.1"
+  },
+  "eslintConfig": {
+    "extends": ["standard"],
+    "rules": {
+      "object-curly-spacing": [2, "always"],
+      "array-bracket-spacing": [2, "always"],
+      "func-style": [2, "expression"],
+      "prefer-arrow-callback": [
+        2,
+        {
+          "allowNamedFunctions": false
+        }
+      ]
+    }
   }
 }

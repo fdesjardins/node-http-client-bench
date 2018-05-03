@@ -25,24 +25,26 @@ const fixtures = {
 const addTestCases = (suite, options) => {
   suite.add('http.request', {
     defer: true,
-    fn: defer => http.get(options.uri, res => {
-      let body = ''
-      res.on('data', data => {
-        body += data
+    fn: defer =>
+      http.get(options.uri, res => {
+        let body = ''
+        res.on('data', data => {
+          body += data
+        })
+        res.on('end', () => {
+          if (body === fixtures[options.size]) {
+            return defer.resolve(body)
+          }
+          throw badDataError
+        })
       })
-      res.on('end', () => {
-        if (body === fixtures[options.size]) {
-          return defer.resolve(body)
-        }
-        throw badDataError
-      })
-    })
   })
 
   suite.add('axios', {
     defer: true,
     fn: defer => {
-      return axios.get(options.uri)
+      return axios
+        .get(options.uri)
         .then(response => {
           if (response.data === fixtures[options.size]) {
             return defer.resolve()
@@ -58,22 +60,24 @@ const addTestCases = (suite, options) => {
   suite.add('got', {
     defer: true,
     fn: defer => {
-      return got(options.uri).then(response => {
-        if (response.body === fixtures[options.size]) {
-          return defer.resolve()
-        }
-        throw badDataError
-      })
-      .catch(err => {
-        throw err
-      })
+      return got(options.uri)
+        .then(response => {
+          if (response.body === fixtures[options.size]) {
+            return defer.resolve()
+          }
+          throw badDataError
+        })
+        .catch(err => {
+          throw err
+        })
     }
   })
 
   suite.add('superagent', {
     defer: true,
     fn: defer => {
-      return superagent.get(options.uri)
+      return superagent
+        .get(options.uri)
         .then(response => {
           if (response.text === fixtures[options.size]) {
             return defer.resolve()
@@ -107,26 +111,18 @@ const addTestCases = (suite, options) => {
     defer: true,
     fn: defer => {
       return nodeFetch(options.uri)
-          .then(response => response.text())
-          .then(text => {
-            if (text === fixtures[options.size]) {
-              return defer.resolve()
-            }
-            throw badDataError
-          })
-          .catch(err => {
-            throw err
-          })
+        .then(response => response.text())
+        .then(text => {
+          if (text === fixtures[options.size]) {
+            return defer.resolve()
+          }
+          throw badDataError
+        })
+        .catch(err => {
+          throw err
+        })
     }
   })
-  // suite.add('request', {
-  //   defer: true,
-  //   fn: defer => request(uri, () => defer.resolve())
-  // })
-  // suite.add('req-fast', {
-  //   defer: true,
-  //   fn: defer => reqFast(uri, () => defer.resolve())
-  // })
 }
 
 let benchmarkIndex = 0
@@ -139,13 +135,15 @@ const onCycle = (totalCases, options, results) => event => {
   const rme = parseFloat(t.stats.rme).toFixed(2)
   const runsSampled = t.count
 
-  const output = [ name, opsPerSecond, `±${rme}%`, runsSampled ]
-  console.log(`${name} x ${opsPerSecond} ops/sec ±${rme}% (${runsSampled} runs sampled)`)
+  const output = [name, opsPerSecond, `±${rme}%`, runsSampled]
+  console.log(
+    `${name} x ${opsPerSecond} ops/sec ±${rme}% (${runsSampled} runs sampled)`
+  )
 
   const uri = options[downloadSizeIndex].uri
   results[uri].push(output)
 
-  benchmarkIndex = (benchmarkIndex + 1)
+  benchmarkIndex = benchmarkIndex + 1
   if (benchmarkIndex % (totalCases / options.length) === 0) {
     downloadSizeIndex += 1
   }
@@ -155,34 +153,40 @@ const createFileSizeSection = (size, results) => {
   return `
 ### GET ${size}
 \`\`\`
-${textTable(results, { align: [ 'l', 'r', 'r', 'r' ] })}
+${textTable(results, { align: ['l', 'r', 'r', 'r'] })}
 \`\`\`
   `
 }
 
 const onComplete = (options, results) => () => {
-  let template = fs.readFileSync(path.join(__dirname, './templates/readme.md')).toString()
+  let template = fs
+    .readFileSync(path.join(__dirname, './templates/readme.md'))
+    .toString()
 
-  const resultsString = options.map(s => createFileSizeSection(`${s.size}K.txt`, results[s.uri])).join('')
+  const resultsString = options
+    .map(s => createFileSizeSection(`${s.size}K.txt`, results[s.uri]))
+    .join('')
 
   template = template.replace('${results}', resultsString)
 
   fs.writeFileSync(path.join(__dirname, 'readme.md'), template)
 }
 
-const runBenchmarks = (options) => {
+const runBenchmarks = ({ downloadSizes }) => {
   const tableHead = [
-    [ 'Module', 'OPS', 'RME', 'Samples' ],
-    [ '---------------', '----------', '----------', '----------' ]
+    ['Module', 'OPS', 'RME', 'Samples'],
+    ['---------------', '----------', '----------', '----------']
   ]
 
   const results = {}
-  options.map(s => { results[s.uri] = [ ...tableHead ] })
+  downloadSizes.map(s => {
+    results[s.uri] = [...tableHead]
+  })
 
   const suite = Benchmark.Suite()
-  options.map(o => addTestCases(suite, o))
-  suite.on('cycle', onCycle(suite.length, options, results))
-  suite.on('complete', onComplete(options, results))
+  downloadSizes.map(o => addTestCases(suite, o))
+  suite.on('cycle', onCycle(suite.length, downloadSizes, results))
+  suite.on('complete', onComplete(downloadSizes, results))
 
   suite.run({
     async: true
@@ -190,13 +194,14 @@ const runBenchmarks = (options) => {
 }
 
 if (!module.parent) {
-  const createFixtureUri = filesize => `http://${process.env.NGINX}/${filesize}K.txt`
-  const downloadSizes = [ 16, 32, 64, 256, 1024 ]
-  const options = downloadSizes.map(s => {
-    return {
-      uri: createFixtureUri(s),
-      size: s
-    }
-  })
+  const options = {
+    downloadSizes: [16, 32, 64, 256, 1024].map(s => {
+      return {
+        uri: `http://${process.env.NGINX}/${s}K.txt`,
+        size: s
+      }
+    })
+  }
+
   runBenchmarks(options)
 }
