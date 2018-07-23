@@ -20,9 +20,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "benchmark": "^2.1.4",
-    "got": "^8.3.1",
+    "got": "^8.3.2",
     "isomorphic-fetch": "^2.2.1",
-    "node-fetch": "^2.1.2",
+    "node-fetch": "^2.2.0",
     "req-fast": "^0.2.17",
     "request": "^2.87.0",
     "superagent": "^3.8.3",
