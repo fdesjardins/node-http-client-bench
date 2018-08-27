@@ -1,6 +1,6 @@
 {
   "name": "node-http-client-bench",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Benchmarks for all the popular Node.js HTTP client libraries",
   "main": "index.js",
   "repository": "fdesjardins/node-http-client-bench",
