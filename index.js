@@ -7,9 +7,8 @@ const axios = require('axios')
 const got = require('got')
 const nodeFetch = require('node-fetch')
 const isomorphicFetch = require('isomorphic-fetch')
-const request = require('request')
-const reqFast = require('req-fast')
 const superagent = require('superagent')
+const ky = require('ky-universal')
 
 const badDataError = new Error('ERROR: incorrect data')
 
@@ -121,6 +120,22 @@ const addTestCases = (suite, options) => {
         .catch(err => {
           throw err
         })
+    }
+  })
+
+  suite.add('ky-universal', {
+    defer: true,
+    fn: async defer => {
+      try {
+        const response = await ky(options.uri)
+        const text = await response.text()
+        if (text === fixtures[options.size]) {
+          return defer.resolve()
+        }
+        throw badDataError
+      } catch (err) {
+        throw err
+      }
     }
   })
 }

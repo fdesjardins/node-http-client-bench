@@ -20,16 +20,18 @@
   "dependencies": {
     "axios": "^0.18.0",
     "benchmark": "^2.1.4",
-    "got": "^9.1.0",
+    "got": "^9.6.0",
     "isomorphic-fetch": "^2.2.1",
-    "node-fetch": "^2.2.0",
-    "req-fast": "^0.2.17",
+    "ky": "^0.9.0",
+    "ky-universal": "^0.1.0",
+    "node-fetch": "^2.3.0",
+    "req-fast": "^0.2.18",
     "request": "^2.88.0",
-    "superagent": "^3.8.3",
+    "superagent": "^4.1.0",
     "text-table": "^0.2.0"
   },
   "devDependencies": {
-    "standard": "^11.0.1"
+    "standard": "^12.0.1"
   },
   "eslintConfig": {
     "extends": [

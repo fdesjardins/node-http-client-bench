@@ -4,6 +4,17 @@ Benchmarks for popular Node.js HTTP client libraries.
 
 These benchmarks use Nginx in a docker container to serve static files of several sizes.
 
+**Versions Tested**
+
+- `node@11.10.0`
+- `axios@0.18.0`
+- `got@9.6.0`
+- `superagent@4.1.0`
+- `isomorphic-fetch@2.2.1`
+- `node-fetch@2.3.0`
+- `ky@0.9.0`
+- `ky-universal@0.1.0`
+
 ## Usage
 
 ```
@@ -14,7 +25,7 @@ $ node index.js
 
 ## Results
 
-${results}
+\${results}
 
 ## License
 
