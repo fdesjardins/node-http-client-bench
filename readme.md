@@ -9,11 +9,11 @@ These benchmarks use Nginx in a docker container to serve static files of severa
 - `node@11.10.0`
 - `axios@0.18.0`
 - `got@9.6.0`
-- `superagent@4.1.0`
+- `superagent@5.0.5`
 - `isomorphic-fetch@2.2.1`
-- `node-fetch@2.3.0`
-- `ky@0.9.0`
-- `ky-universal@0.1.0`
+- `node-fetch@2.5.0`
+- `ky@0.10.0`
+- `ky-universal@0.2.0`
 
 ## Usage
 
@@ -25,75 +25,72 @@ $ node index.js
 
 ## Results
 
+\
 ### GET 16K.txt
-
 ```
 Module                  OPS         RME     Samples
 ---------------  ----------  ----------  ----------
-http.request           1781      ±2.69%         105
-axios                  1440      ±2.55%          98
-got                    1071      ±2.45%          72
-superagent             1789      ±2.49%         109
-isomorphicFetch        1465      ±2.72%          97
-nodeFetch              1506      ±2.60%          91
-ky-universal           1488      ±3.66%          97
+http.request           1609      ±3.95%         106
+axios                  1255      ±2.87%          79
+got                     977      ±2.80%          66
+superagent             1523      ±2.90%         100
+isomorphicFetch        1410      ±3.02%          93
+nodeFetch              1332      ±2.79%          87
+ky-universal           1273      ±3.86%          87
 ```
-
+  
 ### GET 32K.txt
-
 ```
 Module                  OPS         RME     Samples
 ---------------  ----------  ----------  ----------
-http.request           1812      ±2.99%         107
-axios                  1392      ±2.40%          94
-got                    1087      ±2.31%          71
-superagent             1655      ±2.47%         100
-isomorphicFetch        1344      ±2.39%          90
-nodeFetch              1399      ±2.40%          92
-ky-universal           1334      ±3.83%         100
+http.request           1472      ±3.29%          93
+axios                  1025      ±3.62%          74
+got                    1086      ±2.95%          71
+superagent             1507      ±2.51%          92
+isomorphicFetch        1339      ±2.75%          88
+nodeFetch              1334      ±2.63%          84
+ky-universal           1197      ±3.82%          83
 ```
-
+  
 ### GET 64K.txt
-
 ```
 Module                  OPS         RME     Samples
 ---------------  ----------  ----------  ----------
-http.request           1370      ±2.73%          81
-axios                  1073      ±3.11%          69
-got                     897      ±3.04%          61
-superagent             1385      ±1.81%          83
-isomorphicFetch        1156      ±1.86%          68
-nodeFetch              1141      ±1.81%          73
-ky-universal            987      ±3.53%          73
+http.request           1211      ±3.51%          77
+axios                   914      ±3.31%          65
+got                     872      ±2.86%          59
+superagent             1232      ±2.18%          80
+isomorphicFetch         995      ±2.72%          75
+nodeFetch              1079      ±1.91%          71
+ky-universal            877      ±3.14%          67
 ```
-
+  
 ### GET 256K.txt
-
 ```
 Module                  OPS         RME     Samples
 ---------------  ----------  ----------  ----------
-http.request            769      ±2.26%          45
-axios                   494      ±3.36%          34
-got                     465      ±2.31%          29
-superagent              780      ±1.54%          48
-isomorphicFetch         580      ±2.00%          36
-nodeFetch               571      ±1.89%          34
-ky-universal            513      ±1.87%          33
+http.request            703      ±3.04%          42
+axios                   474      ±3.67%          36
+got                     427      ±3.22%          28
+superagent              702      ±1.96%          44
+isomorphicFetch         539      ±2.19%          35
+nodeFetch               551      ±2.01%          37
+ky-universal            459      ±2.75%          30
 ```
-
+  
 ### GET 1024K.txt
-
 ```
 Module                  OPS         RME     Samples
 ---------------  ----------  ----------  ----------
-http.request            276      ±3.00%          21
-axios                   208      ±2.05%          14
-got                     220      ±1.99%          13
-superagent              258      ±1.78%          16
-isomorphicFetch         201      ±1.48%          12
-nodeFetch               202      ±1.71%          12
-ky-universal            219      ±1.33%          14
+http.request            246      ±3.17%          19
+axios                   184      ±2.01%          12
+got                     206      ±2.00%          13
+superagent              255      ±1.92%          16
+isomorphicFetch         197      ±1.46%          12
+nodeFetch               186      ±2.12%          13
+ky-universal            205      ±2.15%          13
 ```
+  
 
 ## License
 
