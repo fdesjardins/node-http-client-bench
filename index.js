@@ -9,6 +9,7 @@ const nodeFetch = require('node-fetch')
 const isomorphicFetch = require('isomorphic-fetch')
 const superagent = require('superagent')
 const ky = require('ky-universal')
+const request = require('request')
 
 const badDataError = new Error('ERROR: incorrect data')
 
@@ -136,6 +137,21 @@ const addTestCases = (suite, options) => {
       } catch (err) {
         throw err
       }
+    }
+  })
+
+  suite.add('request', {
+    defer: true,
+    fn: defer => {
+      return request(options.uri,function(error, response, body) {
+        if (error) {
+          throw error
+        }
+        if (body === fixtures[options.size]) {
+          return defer.resolve()
+        }
+        throw badDataError
+      })
     }
   })
 }
