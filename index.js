@@ -9,6 +9,8 @@ const nodeFetch = require('node-fetch')
 const isomorphicFetch = require('isomorphic-fetch')
 const superagent = require('superagent')
 const ky = require('ky-universal')
+const request = require('request')
+const { Agent } = require('http')
 
 const badDataError = new Error('ERROR: incorrect data')
 
@@ -22,7 +24,7 @@ const fixtures = {
 }
 
 const addTestCases = (suite, options) => {
-  suite.add('http.request', {
+  suite.add('http.request with default agent', {
     defer: true,
     fn: defer =>
       http.get(options.uri, res => {
@@ -37,6 +39,57 @@ const addTestCases = (suite, options) => {
           throw badDataError
         })
       })
+  })
+
+  suite.add('http.request with http 1.1', {
+    defer: true,
+    fn: defer =>
+      http.get(options.uri, { agent: new Agent({ keepalive: true }) }, res => {
+        let body = ''
+        res.on('data', data => {
+          body += data
+        })
+        res.on('end', () => {
+          if (body === fixtures[options.size]) {
+            return defer.resolve(body)
+          }
+          throw badDataError
+        })
+      })
+  })
+
+  suite.add('http.request with http 1.0', {
+    defer: true,
+    fn: defer =>
+      http.get(options.uri, { agent: false }, res => {
+        let body = ''
+        res.on('data', data => {
+          body += data
+        })
+        res.on('end', () => {
+          if (body === fixtures[options.size]) {
+            return defer.resolve(body)
+          }
+          throw badDataError
+        })
+      })
+  })
+
+  suite.add('http.request with http 1.0 and nodelay', {
+    defer: true,
+    fn: defer =>
+      http.get(options.uri, { agent: false }, res => {
+        let body = ''
+        res.on('data', data => {
+          body += data
+        })
+        res.on('end', () => {
+          if (body === fixtures[options.size]) {
+            return defer.resolve(body)
+          }
+          throw badDataError
+        })
+      }).setNoDelay(true)
   })
 
   suite.add('axios', {
@@ -136,6 +189,21 @@ const addTestCases = (suite, options) => {
       } catch (err) {
         throw err
       }
+    }
+  })
+
+  suite.add('request', {
+    defer: true,
+    fn: defer => {
+      return request(options.uri,function(error, response, body) {
+        if (error) {
+          throw error
+        }
+        if (body === fixtures[options.size]) {
+          return defer.resolve()
+        }
+        throw badDataError
+      })
     }
   })
 }
