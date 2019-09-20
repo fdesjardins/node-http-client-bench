@@ -6,7 +6,7 @@ These benchmarks use Nginx in a docker container to serve static files of severa
 
 **Versions Tested**
 
-- `node@12.10.0`
+- `node@11.10.0`
 - `axios@0.18.0`
 - `got@9.6.0`
 - `superagent@5.0.5`
@@ -29,85 +29,85 @@ $ node index.js
 ```
 Module                                         OPS         RME     Samples
 ---------------                         ----------  ----------  ----------
-http.request with default agent               1889      ±4.64%         129
-http.request with http 1.1                    1862      ±2.17%         115
-http.request with http 1.0                    1914      ±2.30%         121
-http.request with http 1.0 and nodelay        2022      ±1.94%         122
-axios                                         1606      ±2.22%          99
-got                                           1125      ±2.87%          74
-superagent                                    1673      ±2.21%         103
-isomorphicFetch                               1531      ±3.14%          97
-nodeFetch                                     1508      ±2.99%          96
-ky-universal                                   475      ±1.65%          30
-request                                       1406      ±3.81%          94
+http.request with default agent               1754      ±4.09%         114
+http.request with http 1.1                    1903      ±2.48%         117
+http.request with http 1.0                    1932      ±2.29%         116
+http.request with http 1.0 and nodelay        2025      ±1.73%         121
+axios                                         1507      ±2.39%         102
+got                                           1148      ±3.40%          75
+superagent                                    1779      ±1.95%         105
+isomorphicFetch                               1495      ±3.00%          96
+nodeFetch                                     1424      ±3.35%          97
+ky-universal                                   472      ±1.69%          27
+request                                       1437      ±3.92%          93
 ```
 
 ### GET 32K.txt
 ```
 Module                                         OPS         RME     Samples
 ---------------                         ----------  ----------  ----------
-http.request with default agent               1757      ±1.66%         100
-http.request with http 1.1                    1731      ±2.06%         103
-http.request with http 1.0                    1766      ±2.05%         106
-http.request with http 1.0 and nodelay        1805      ±1.70%         105
-axios                                         1359      ±2.50%          87
-got                                           1152      ±2.63%          77
-superagent                                    1701      ±1.89%          98
-isomorphicFetch                               1442      ±2.73%          92
-nodeFetch                                     1424      ±2.47%          88
-ky-universal                                   460      ±2.02%          30
-request                                       1358      ±3.55%          87
+http.request with default agent               1795      ±1.96%         104
+http.request with http 1.1                    1748      ±1.64%         103
+http.request with http 1.0                    1781      ±1.97%         106
+http.request with http 1.0 and nodelay        1820      ±1.48%         103
+axios                                         1316      ±2.74%          81
+got                                           1105      ±2.60%          76
+superagent                                    1615      ±2.41%         109
+isomorphicFetch                               1362      ±2.59%          89
+nodeFetch                                     1391      ±2.10%          87
+ky-universal                                   447      ±1.71%          28
+request                                       1388      ±2.41%          85
 ```
 
 ### GET 64K.txt
 ```
 Module                                         OPS         RME     Samples
 ---------------                         ----------  ----------  ----------
-http.request with default agent               1489      ±1.91%          87
-http.request with http 1.1                    1407      ±2.48%          87
-http.request with http 1.0                    1414      ±2.18%          88
-http.request with http 1.0 and nodelay        1373      ±2.17%          82
-axios                                         1083      ±3.22%          73
-got                                            967      ±2.69%          63
-superagent                                    1305      ±3.35%          80
-isomorphicFetch                               1063      ±2.38%          71
-nodeFetch                                     1102      ±2.43%          72
-ky-universal                                   411      ±2.40%          25
-request                                       1065      ±4.28%          70
+http.request with default agent               1344      ±2.35%          81
+http.request with http 1.1                    1377      ±2.18%          82
+http.request with http 1.0                    1417      ±2.38%          86
+http.request with http 1.0 and nodelay        1363      ±2.33%          89
+axios                                         1073      ±2.48%          68
+got                                            962      ±2.39%          67
+superagent                                    1391      ±2.25%          84
+isomorphicFetch                               1099      ±2.72%          73
+nodeFetch                                     1099      ±1.92%          69
+ky-universal                                   426      ±2.06%          27
+request                                       1069      ±3.68%          67
 ```
 
 ### GET 256K.txt
 ```
 Module                                         OPS         RME     Samples
 ---------------                         ----------  ----------  ----------
-http.request with default agent                849      ±3.14%          54
-http.request with http 1.1                     859      ±2.23%          52
-http.request with http 1.0                     839      ±2.16%          50
-http.request with http 1.0 and nodelay         818      ±2.82%          51
-axios                                          565      ±2.40%          37
-got                                            534      ±1.65%          34
-superagent                                     766      ±2.16%          47
-isomorphicFetch                                576      ±2.41%          40
-nodeFetch                                      588      ±2.13%          40
-ky-universal                                   310      ±1.39%          20
-request                                        635      ±3.52%          40
+http.request with default agent                805      ±1.77%          47
+http.request with http 1.1                     866      ±1.92%          52
+http.request with http 1.0                     891      ±1.51%          51
+http.request with http 1.0 and nodelay         815      ±2.10%          51
+axios                                          534      ±2.79%          36
+got                                            529      ±1.55%          32
+superagent                                     800      ±1.88%          46
+isomorphicFetch                                564      ±1.92%          33
+nodeFetch                                      555      ±1.49%          37
+ky-universal                                   309      ±1.46%          19
+request                                        607      ±4.22%          39
 ```
 
 ### GET 1024K.txt
 ```
 Module                                         OPS         RME     Samples
 ---------------                         ----------  ----------  ----------
-http.request with default agent                270      ±2.66%          18
-http.request with http 1.1                     278      ±1.05%          18
-http.request with http 1.0                     290      ±1.61%          18
-http.request with http 1.0 and nodelay         282      ±1.98%          18
-axios                                          219      ±1.55%          13
-got                                            226      ±1.87%          13
-superagent                                     286      ±2.22%          17
-isomorphicFetch                                205      ±1.15%          12
-nodeFetch                                      213      ±1.06%          13
-ky-universal                                   177      ±1.75%          11
-request                                        206      ±2.52%          13
+http.request with default agent                278      ±2.46%          17
+http.request with http 1.1                     289      ±1.51%          18
+http.request with http 1.0                     299      ±1.95%          18
+http.request with http 1.0 and nodelay         285      ±1.36%          18
+axios                                          219      ±1.42%          14
+got                                            232      ±2.23%          14
+superagent                                     280      ±2.09%          17
+isomorphicFetch                                205      ±1.22%          13
+nodeFetch                                      206      ±1.31%          12
+ky-universal                                   181      ±1.71%          11
+request                                        212      ±2.02%          13
 ```
 
 
