@@ -24,7 +24,7 @@
     "isomorphic-fetch": "^2.2.1",
     "ky": "^0.14.0",
     "ky-universal": "^0.3.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "req-fast": "^0.2.18",
     "request": "^2.88.0",
     "superagent": "^5.1.0",
